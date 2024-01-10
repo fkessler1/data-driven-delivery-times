@@ -1,0 +1,430 @@
+@prefix : <http://sick.com/ontology/buc#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://sick.com/ontology/buc> .
+
+<http://sick.com/ontology/buc> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://sick.com/ontology/buc#billOfMaterial
+:billOfMaterial rdf:type owl:ObjectProperty ;
+                rdfs:domain :ProductType ;
+                rdfs:range :ProductionBillOfMaterial .
+
+
+###  http://sick.com/ontology/buc#createdFromOrderPosition
+:createdFromOrderPosition rdf:type owl:ObjectProperty ;
+                          rdfs:domain :PlanningOrder ;
+                          rdfs:range :OrderPosition .
+
+
+###  http://sick.com/ontology/buc#currentStatus
+:currentStatus rdf:type owl:ObjectProperty ;
+               rdfs:domain :ProductionAsset ;
+               rdfs:range :AssetStatus .
+
+
+###  http://sick.com/ontology/buc#customerDeliveries
+:customerDeliveries rdf:type owl:ObjectProperty ;
+                    rdfs:domain :CustomerOrder ;
+                    rdfs:range :Delivery .
+
+
+###  http://sick.com/ontology/buc#customerOrder
+:customerOrder rdf:type owl:ObjectProperty ;
+               rdfs:domain :Delivery ;
+               rdfs:range :CustomerOrder .
+
+
+###  http://sick.com/ontology/buc#deliveryPosition
+:deliveryPosition rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Delivery ;
+                  rdfs:range :DeliveryPosition .
+
+
+###  http://sick.com/ontology/buc#milestones
+:milestones rdf:type owl:ObjectProperty ;
+            rdfs:domain :WorkingPlan ;
+            rdfs:range :Milestone .
+
+
+###  http://sick.com/ontology/buc#orderPhase
+:orderPhase rdf:type owl:ObjectProperty ;
+            rdfs:domain :LotResult ;
+            rdfs:range :OrderPhase .
+
+
+###  http://sick.com/ontology/buc#orderPositions
+:orderPositions rdf:type owl:ObjectProperty ;
+                rdfs:domain :CustomerOrder ;
+                rdfs:range :OrderPosition .
+
+
+###  http://sick.com/ontology/buc#orderedProduct
+:orderedProduct rdf:type owl:ObjectProperty ;
+                rdfs:domain :OrderPosition ;
+                rdfs:range :ProductType .
+
+
+###  http://sick.com/ontology/buc#plannedProductType
+:plannedProductType rdf:type owl:ObjectProperty ;
+                    rdfs:domain :WorkingPlan ;
+                    rdfs:range :ProductType .
+
+
+###  http://sick.com/ontology/buc#planningOrder
+:planningOrder rdf:type owl:ObjectProperty ;
+               rdfs:domain [ rdf:type owl:Class ;
+                             owl:unionOf ( :ProductLot
+                                           :ProductionOrder
+                                         )
+                           ] ;
+               rdfs:range :PlanningOrder ;
+               rdfs:comment "one planning order has usually one production order but can be changed" .
+
+
+###  http://sick.com/ontology/buc#productCategory
+:productCategory rdf:type owl:ObjectProperty ;
+                 rdfs:domain :ProductType ;
+                 rdfs:range :ProductCategory .
+
+
+###  http://sick.com/ontology/buc#productDelivery
+:productDelivery rdf:type owl:ObjectProperty ;
+                 rdfs:domain :ProductLot ;
+                 rdfs:range :Delivery .
+
+
+###  http://sick.com/ontology/buc#productLot
+:productLot rdf:type owl:ObjectProperty ;
+            rdfs:domain :LotResult ;
+            rdfs:range :ProductLot .
+
+
+###  http://sick.com/ontology/buc#productProduced
+:productProduced rdf:type owl:ObjectProperty ;
+                 rdfs:domain [ rdf:type owl:Class ;
+                               owl:unionOf ( :DeliveryPosition
+                                             :OrderPosition
+                                             :PlanningOrder
+                                             :ProductLot
+                                             :ProductionOrder
+                                             :StorageQuantity
+                                           )
+                             ] ;
+                 rdfs:range :ProductType .
+
+
+###  http://sick.com/ontology/buc#productionBillOfMaterial
+:productionBillOfMaterial rdf:type owl:ObjectProperty ;
+                          rdfs:domain :ProductionOrder ;
+                          rdfs:range :ProductionBillOfMaterial .
+
+
+###  http://sick.com/ontology/buc#productionOrder
+:productionOrder rdf:type owl:ObjectProperty ;
+                 rdfs:domain [ rdf:type owl:Class ;
+                               owl:unionOf ( :CustomerOrder
+                                             :ProductLot
+                                           )
+                             ] ;
+                 rdfs:range :ProductionOrder .
+
+
+###  http://sick.com/ontology/buc#usedWorkPlace
+:usedWorkPlace rdf:type owl:ObjectProperty ;
+               rdfs:domain :Task ;
+               rdfs:range :Workplace .
+
+
+###  http://sick.com/ontology/buc#usesAsset
+:usesAsset rdf:type owl:ObjectProperty ;
+           rdfs:domain :ProductionOrder ;
+           rdfs:range :ProductionAsset .
+
+
+###  http://sick.com/ontology/buc#workingPlan
+:workingPlan rdf:type owl:ObjectProperty ;
+             rdfs:domain :ProductionOrder ;
+             rdfs:range :WorkingPlan .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://sick.com/ontology/buc#averageAvailability
+:averageAvailability rdf:type owl:DatatypeProperty ;
+                     rdfs:domain :ProductionAsset ;
+                     rdfs:range xsd:nonPositiveInteger ;
+                     rdfs:comment "percentage of availability in timeframe"@en .
+
+
+###  http://sick.com/ontology/buc#customerOrderId
+:customerOrderId rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :CustomerOrder ;
+                 rdfs:range xsd:string .
+
+
+###  http://sick.com/ontology/buc#deliveryDuration
+:deliveryDuration rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :Delivery ;
+                  rdfs:range xsd:positiveInteger ;
+                  rdfs:label "Lieferdauer"@de .
+
+
+###  http://sick.com/ontology/buc#deliveryId
+:deliveryId rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Delivery ;
+            rdfs:range xsd:string .
+
+
+###  http://sick.com/ontology/buc#deliveryPlanTime
+:deliveryPlanTime rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :Delivery ;
+                  rdfs:range xsd:dateTime .
+
+
+###  http://sick.com/ontology/buc#deliveryQuanity
+:deliveryQuanity rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :DeliveryPosition ;
+                 rdfs:range xsd:positiveInteger .
+
+
+###  http://sick.com/ontology/buc#deliveryTime
+:deliveryTime rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Delivery ;
+              rdfs:range xsd:dateTime ;
+              rdfs:label "Lieferzeit"@de .
+
+
+###  http://sick.com/ontology/buc#manufacturingPlanTime
+:manufacturingPlanTime rdf:type owl:DatatypeProperty ;
+                       rdfs:domain :ProductionOrder ;
+                       rdfs:range xsd:dateTime .
+
+
+###  http://sick.com/ontology/buc#orderEndTime
+:orderEndTime rdf:type owl:DatatypeProperty ;
+              rdfs:domain :ProductionOrder ;
+              rdfs:range xsd:dateTime .
+
+
+###  http://sick.com/ontology/buc#orderNumber
+:orderNumber rdf:type owl:DatatypeProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain :ProductionOrder ;
+             rdfs:range xsd:string .
+
+
+###  http://sick.com/ontology/buc#orderQuantity
+:orderQuantity rdf:type owl:DatatypeProperty ;
+               rdfs:domain :OrderPosition ;
+               rdfs:range xsd:positiveInteger .
+
+
+###  http://sick.com/ontology/buc#orderStartDate
+:orderStartDate rdf:type owl:DatatypeProperty ;
+                rdfs:domain :ProductionOrder ;
+                rdfs:range xsd:dateTime .
+
+
+###  http://sick.com/ontology/buc#partNumber
+:partNumber rdf:type owl:DatatypeProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :ProductType ;
+            rdfs:range xsd:string ;
+            rdfs:label "Sachnummer"@de .
+
+
+###  http://sick.com/ontology/buc#productQuantity
+:productQuantity rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :ProductLot ;
+                 rdfs:range xsd:nonNegativeInteger .
+
+
+###  http://sick.com/ontology/buc#productionOrderId
+:productionOrderId rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :ProductionOrder ;
+                   rdfs:range xsd:string .
+
+
+###  http://sick.com/ontology/buc#storageQuantity
+:storageQuantity rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :StorageQuantity ;
+                 rdfs:range xsd:nonNegativeInteger .
+
+
+###  http://sick.com/ontology/buc#taskEndTime
+:taskEndTime rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Task ;
+             rdfs:range xsd:dateTime .
+
+
+###  http://sick.com/ontology/buc#taskStartTime
+:taskStartTime rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Task ;
+               rdfs:range xsd:dateTime .
+
+
+###  http://sick.com/ontology/buc#workPlaceId
+:workPlaceId rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Workplace ;
+             rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://sick.com/ontology/buc#AssetStatus
+:AssetStatus rdf:type owl:Class .
+
+
+###  http://sick.com/ontology/buc#CustomerOrder
+:CustomerOrder rdf:type owl:Class ;
+               rdfs:label "Kundenauftrag"@de .
+
+
+###  http://sick.com/ontology/buc#Delivery
+:Delivery rdf:type owl:Class ;
+          rdfs:label "Lieferung"@de .
+
+
+###  http://sick.com/ontology/buc#DeliveryPosition
+:DeliveryPosition rdf:type owl:Class .
+
+
+###  http://sick.com/ontology/buc#LotResult
+:LotResult rdf:type owl:Class .
+
+
+###  http://sick.com/ontology/buc#Milestone
+:Milestone rdf:type owl:Class ;
+           rdfs:subClassOf :Task .
+
+
+###  http://sick.com/ontology/buc#OrderPhase
+:OrderPhase rdf:type owl:Class .
+
+
+###  http://sick.com/ontology/buc#OrderPosition
+:OrderPosition rdf:type owl:Class .
+
+
+###  http://sick.com/ontology/buc#PlanningOrder
+:PlanningOrder rdf:type owl:Class ;
+               rdfs:label "Planauftrag"@de .
+
+
+###  http://sick.com/ontology/buc#ProductCategory
+:ProductCategory rdf:type owl:Class .
+
+
+###  http://sick.com/ontology/buc#ProductLot
+:ProductLot rdf:type owl:Class .
+
+
+###  http://sick.com/ontology/buc#ProductType
+:ProductType rdf:type owl:Class .
+
+
+###  http://sick.com/ontology/buc#ProductionAsset
+:ProductionAsset rdf:type owl:Class .
+
+
+###  http://sick.com/ontology/buc#ProductionBillOfMaterial
+:ProductionBillOfMaterial rdf:type owl:Class ;
+                          rdfs:comment "the bill of material associated with production order, created from plant-specific bill of material when order is created"@en ;
+                          rdfs:label "Stückliste"@de .
+
+
+###  http://sick.com/ontology/buc#ProductionOrder
+:ProductionOrder rdf:type owl:Class ;
+                 rdfs:label "Fertigungsauftrag"@de .
+
+
+###  http://sick.com/ontology/buc#ProductionStation
+:ProductionStation rdf:type owl:Class ;
+                   rdfs:subClassOf :ProductionAsset .
+
+
+###  http://sick.com/ontology/buc#StorageQuantity
+:StorageQuantity rdf:type owl:Class .
+
+
+###  http://sick.com/ontology/buc#Task
+:Task rdf:type owl:Class ;
+      rdfs:label "Vorgang"@de .
+
+
+###  http://sick.com/ontology/buc#WorkingPlan
+:WorkingPlan rdf:type owl:Class ;
+             rdfs:label "Arbeitsplan"@de .
+
+
+###  http://sick.com/ontology/buc#Workplace
+:Workplace rdf:type owl:Class ;
+           rdfs:subClassOf :ProductionAsset ;
+           rdfs:label "Arbeitsplatz"@de .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://sick.com/ontology/buc#Available
+:Available rdf:type owl:NamedIndividual ,
+                    :AssetStatus .
+
+
+###  http://sick.com/ontology/buc#CategoryZA
+:CategoryZA rdf:type owl:NamedIndividual ,
+                     :ProductCategory ;
+            rdfs:label "ZA"@de .
+
+
+###  http://sick.com/ontology/buc#CategoryZB
+:CategoryZB rdf:type owl:NamedIndividual ,
+                     :ProductCategory ;
+            rdfs:label "ZB"@de .
+
+
+###  http://sick.com/ontology/buc#CategoryZC
+:CategoryZC rdf:type owl:NamedIndividual ,
+                     :ProductCategory ;
+            rdfs:label "ZC"@de .
+
+
+###  http://sick.com/ontology/buc#InDeliveryStorage
+:InDeliveryStorage rdf:type owl:NamedIndividual .
+
+
+###  http://sick.com/ontology/buc#InMainStorage
+:InMainStorage rdf:type owl:NamedIndividual .
+
+
+###  http://sick.com/ontology/buc#InManufacturing
+:InManufacturing rdf:type owl:NamedIndividual .
+
+
+###  http://sick.com/ontology/buc#InPlanning
+:InPlanning rdf:type owl:NamedIndividual .
+
+
+###  http://sick.com/ontology/buc#Ordered
+:Ordered rdf:type owl:NamedIndividual .
+
+
+###  http://sick.com/ontology/buc#Unavailable
+:Unavailable rdf:type owl:NamedIndividual ,
+                      :AssetStatus .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
